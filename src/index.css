@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .tab {
+    @apply flex justify-center items-center flex-1 py-2 cursor-pointer capitalize;
+  }
+  .checkbox:checked + div {
+    @apply line-through;
+  }
+}
