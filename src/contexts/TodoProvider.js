@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export const TodoContext = React.createContext();
@@ -6,6 +6,8 @@ export const TodoContext = React.createContext();
 export default function TodoProvider({ children }) {
   const [itemList, setItemList] = useState([]);
   const [typeTodo, setTypeTodo] = useState('all');
+
+  console.log('TodoProvider');
 
   useEffect(() => {
     const itemListObjectString = localStorage.getItem('itemList');
@@ -54,17 +56,19 @@ export default function TodoProvider({ children }) {
     });
   }
 
-  const value = useMemo(() => {
-    return {
-      itemList,
-      typeTodo,
-      setTypeTodo,
-      handleAdd,
-      handleDelete,
-      handleDeleteAll,
-      handleChangeCheckBox,
-    };
-  }, [itemList, typeTodo]);
-
-  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
+  return (
+    <TodoContext.Provider
+      value={{
+        itemList,
+        typeTodo,
+        setTypeTodo,
+        handleAdd,
+        handleDelete,
+        handleDeleteAll,
+        handleChangeCheckBox,
+      }}
+    >
+      {children}
+    </TodoContext.Provider>
+  );
 }
